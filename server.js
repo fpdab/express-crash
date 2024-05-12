@@ -5,6 +5,10 @@ const PORT = process.env.PORT
 
 const app = express()
 
+//body parser middleware
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
 //manual static folder setup
 // app.get("/", (req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "index.html"))
@@ -17,6 +21,6 @@ const app = express()
 //setup static folder
 //app.use(express.static(path.join(__dirname, "public")))
 
-app.use("/", posts)
+app.use("/api/posts", posts)
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
