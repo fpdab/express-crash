@@ -1,13 +1,19 @@
 import express from "express"
 import posts from "./routes/posts.js"
+import logger from "./middleware/logger.js"
+import errorHandler from "./middleware/error.js"
+import notfound from "./middleware/notfound.js"
 const PORT = process.env.PORT
 //import path from "path"
 
 const app = express()
 
-//body parser middleware
+//Body parser middleware
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
+
+//Logger middleware
+app.use(logger)
 
 //manual static folder setup
 // app.get("/", (req, res) => {
@@ -21,6 +27,11 @@ app.use(express.urlencoded({ extended: false }))
 //setup static folder
 //app.use(express.static(path.join(__dirname, "public")))
 
+//Routes
 app.use("/api/posts", posts)
+
+//Error handler
+app.use(notfound)
+app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
