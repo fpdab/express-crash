@@ -1,10 +1,10 @@
 import express from "express"
+import path from "path"
 import posts from "./routes/posts.js"
 import logger from "./middleware/logger.js"
 import errorHandler from "./middleware/error.js"
 import notfound from "./middleware/notfound.js"
 const PORT = process.env.PORT
-//import path from "path"
 
 const app = express()
 
@@ -25,7 +25,8 @@ app.use(logger)
 // })
 
 //setup static folder
-//app.use(express.static(path.join(__dirname, "public")))
+const __dirname = import.meta.dirname
+app.use(express.static(path.join(__dirname, "public")))
 
 //Routes
 app.use("/api/posts", posts)
